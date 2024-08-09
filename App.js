@@ -30,21 +30,17 @@ export default function App() {
         setShowResult(true);
       }
     } else {
-      if (input === '' && operators.includes(text)) {
-        setShowResult(false);
-      } else if (
-        operators.includes(input[input.length - 1]) &&
-        operators.includes(text)
+      if (
+        input === '' ||
+        (operators.includes(input[input.length - 1]) && operators.includes(text)) ||
+        (input === '0' && operators.includes(text))
       ) {
         setShowResult(false);
       } else {
-        if (input === '0') {
-          setInput(text)
-        } else {
-          setInput(input + text);
-        }
+        setInput(input === '0' ? text : input + text);
         setShowResult(false);
       }
+      
     }
   };
 
