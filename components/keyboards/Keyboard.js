@@ -11,7 +11,7 @@ export function KeyboardCalc({ type = 'numbers', text, onPress }) {
         type === 'funcs' && styles.keyboardFuncs,
         type === 'nullNumber' && styles.nullNumberKeyboard,
       ]}
-      onPress={() => onPress(text)}
+      onPress={() => onPress(text === ',' ? '.' : text)}
     >
       <Text
         style={[
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
   },
   buttonText: {
+    fontWeight: 'bold',
     fontSize: 30,
   },
   buttonTextNumbers: {
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
   },
   buttonTextFuncs: {
     color: '#000',
+    fontSize: 28,
   },
   buttonTextNullNumber: {
     color: '#fff',

@@ -4,13 +4,14 @@ import { StatusBar } from 'expo-status-bar';
 import { KeyboardsCalc } from './components/keyboards/Keyboards';
 
 export default function App() {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState('0');
   const [result, setResult] = useState('');
   const [showResult, setShowResult] = useState(false);
+  const operators = ['+', '-', '/', '*'];
 
   const handleButtonPress = (text) => {
     if (text === 'AC') {
-      setInput('');
+      setInput('0');
       setResult('');
       setShowResult(false);
     } else if (text === '+/-') {
@@ -23,13 +24,27 @@ export default function App() {
       try {
         setResult(eval(input).toString());
         setShowResult(true);
+        setInput('0')
       } catch {
         setResult('Error');
         setShowResult(true);
       }
     } else {
-      setInput(input + text);
-      setShowResult(false);
+      if (input === '' && operators.includes(text)) {
+        setShowResult(false);
+      } else if (
+        operators.includes(input[input.length - 1]) &&
+        operators.includes(text)
+      ) {
+        setShowResult(false);
+      } else {
+        if (input === '0') {
+          setInput(text)
+        } else {
+          setInput(input + text);
+        }
+        setShowResult(false);
+      }
     }
   };
 
@@ -60,7 +75,7 @@ export default function App() {
     ],
     [
       { type: 'nullNumber', text: '0', onPress: () => handleButtonPress('0') },
-      { type: 'numbers', text: '.', onPress: () => handleButtonPress('.') },
+      { type: 'numbers', text: ',', onPress: () => handleButtonPress('.') },
       { type: 'operators', text: '=', onPress: () => handleButtonPress('=') },
     ],
   ];
